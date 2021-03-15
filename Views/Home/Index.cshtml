@@ -1,0 +1,75 @@
+﻿@model  IEnumerable<ItemsComparing.Models.Item>
+@{
+    ViewData["Title"] = "Items Comparing";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h2>@ViewData["Title"]</h2>
+            <p>Number Of Combinations @ViewData["CombinationCount"]</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Position)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Name)
+                            </th>
+                            <th class="text-right">
+                                @Html.DisplayNameFor(model => model.Score)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Position)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td class="text-right">
+                                    @Html.DisplayFor(modelItem => item.Score)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-12">
+            <button class="btn btn-primary" type="button" id="btnStartCompare">Start Comparing</button>
+        </div>
+    </div>
+    @if ((int)ViewData["CombinationCount"] != 0)
+    {
+        <div class="row">
+            <div class="col-12">
+                <div id="itemComparePartial"></div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <h5>No more combination for comparing. Reload Page!</h5>
+    }
+</div>
+
+<script>
+    document.getElementById("btnStartCompare").onclick = function () { myFunction() };
+    function myFunction() {
+        $("#itemComparePartial").load('@Url.Action("ItemsComparePartialView", "Home")');
+    }
+</script>
